@@ -16,8 +16,11 @@ limitations under the License.
 package cmd
 
 import (
+	// "fmt"
+	"net/http"
 	"errors"
-	"fmt"
+	"io/ioutil"
+	"log"
 	"github.com/spf13/cobra"
 )
 
@@ -54,5 +57,23 @@ func init() {
 }
 
 func delTodo(id string){
-	fmt.Printf("Todo  with id: %v was deleted succesfully!\n", id)
+	// fmt.Printf("Todo  with id: %v was deleted succesfully!\n", id)
+	client := &http.Client{}
+	patch_url := API_URL + string(id)
+
+	
+	req, err := http.NewRequest(http.MethodDelete, patch_url, nil)
+
+	resp, err := client.Do(req)
+	if err != nil {
+			log.Fatal(err)
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        log.Fatal(err)
+    }
+	log.Println(string(body))
 }
