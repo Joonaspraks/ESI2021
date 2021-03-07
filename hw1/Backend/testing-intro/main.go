@@ -8,39 +8,39 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/ulno/esi/testing-intro/article"
+	action "github.com/ulno/esi/testing-intro/article"
 
 	"github.com/gorilla/mux"
 )
 
-var articles = []*article.Article{
+var actions = []*action.Action{
 	{
-		ID:     "1",
-		Title:  "Python Intermediate and Advanced 101",
-		Author: "Arkaprabha Majumdar",
-		Link:   "https://www.amazon.com/dp/B089KVK23P",
+		ID:          "1",
+		Message:     "Watch TV",
+		Name:        "Mats",
+		IsCompleted: "0",
 	},
 	{
-		ID:     "2",
-		Title:  "R programming Advanced",
-		Author: "Arkaprabha Majumdar",
-		Link:   "https://www.amazon.com/dp/B089WH12CR",
+		ID:          "2",
+		Message:     "Make dinner",
+		Name:        "Uku",
+		IsCompleted: "1",
 	},
 	{
-		ID:     "3",
-		Title:  "R programming Fundamentals",
-		Author: "Arkaprabha Majumdar",
-		Link:   "https://www.amazon.com/dp/B089S58WWG",
+		ID:          "3",
+		Message:     "Enjoy your weekend",
+		Name:        "Ants",
+		IsCompleted: "0",
 	},
 }
 
-var articleRepository = article.NewArticleRepository(articles)
+var actionRepository = action.NewActionRepository(actions)
 
 const endPointHit = "Endpoint Hit:"
 
 // genHomePage returns the content of the home page
 func genHomePage() []byte {
-	return []byte("Welcome A to the HomePage!")
+	return []byte("Welocme to Group 11 todo-actions webpage!!!")
 }
 
 func homePage(w http.ResponseWriter, _ *http.Request) {
@@ -48,43 +48,43 @@ func homePage(w http.ResponseWriter, _ *http.Request) {
 	w.Write(genHomePage())
 }
 
-func returnSingleArticle(w http.ResponseWriter, r *http.Request) {
-	log.Println(endPointHit, "return single article")
+func returnSingleAction(w http.ResponseWriter, r *http.Request) {
+	log.Println(endPointHit, "return single action")
 	vars := mux.Vars(r)
 	key := vars["id"]
 
-	w.Write(articleRepository.GenSingleArticle(key))
+	w.Write(actionRepository.GenSingleAction(key))
 }
 
-func createNewArticle(w http.ResponseWriter, r *http.Request) {
-	log.Println(endPointHit, "create new article")
+func createNewAction(w http.ResponseWriter, r *http.Request) {
+	log.Println(endPointHit, "create new action")
 	reqBody, _ := ioutil.ReadAll(r.Body)
-	article := &article.Article{}
-	json.Unmarshal(reqBody, article)
-	articleRepository.AddNewArticle(article)
+	action := &action.Action{}
+	json.Unmarshal(reqBody, action)
+	actionRepository.AddNewAction(action)
 
-	json.NewEncoder(w).Encode(article)
+	json.NewEncoder(w).Encode(action)
 }
 
-func deleteArticle(w http.ResponseWriter, r *http.Request) {
-	log.Println(endPointHit, "delete article")
+func deleteAction(w http.ResponseWriter, r *http.Request) {
+	log.Println(endPointHit, "delete action")
 	vars := mux.Vars(r)
 	id := vars["id"]
 
-	articleRepository.DeleteArticleWithID(id)
+	actionRepository.DeleteActionWithID(id)
 }
 
-func returnAllArticles(w http.ResponseWriter, r *http.Request) {
-	log.Println(endPointHit, "return all articles")
-	w.Write(articleRepository.GenAllArticles())
+func returnAllActions(w http.ResponseWriter, r *http.Request) {
+	log.Println(endPointHit, "return all actions")
+	w.Write(actionRepository.GenAllActions())
 }
 
 func main() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.HandleFunc("/", homePage).Methods(http.MethodGet)
-	myRouter.HandleFunc("/articles", returnAllArticles).Methods(http.MethodGet)
-	myRouter.HandleFunc("/article", createNewArticle).Methods(http.MethodPost)
-	myRouter.HandleFunc("/article/{id}", deleteArticle).Methods(http.MethodDelete)
-	myRouter.HandleFunc("/article/{id}", returnSingleArticle).Methods(http.MethodGet)
+	myRouter.HandleFunc("/todos", returnAllActions).Methods(http.MethodGet)
+	myRouter.HandleFunc("/todos", createNewAction).Methods(http.MethodPost)
+	myRouter.HandleFunc("/todo/{id}", deleteAction).Methods(http.MethodDelete)
+	myRouter.HandleFunc("/todo/{id}", returnSingleAction).Methods(http.MethodGet)
 	log.Fatal(http.ListenAndServe(":8080", myRouter))
 }
