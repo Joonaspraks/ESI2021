@@ -1,0 +1,7 @@
+services:
+  golang-be:
+    build: "./Backend/testing-intro/"
+  golang-cli:
+    build: "./go-cli"
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
