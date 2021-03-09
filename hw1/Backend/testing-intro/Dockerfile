@@ -1,9 +1,13 @@
-FROM golang:1.16
+FROM golang:1.16 as build
 
 WORKDIR /go/src/app
 COPY . .
 
-#RUN go install
+RUN go build -o /go-be
 
-#CMD ["app"]
-CMD ["go", "run", "main.go"]
+FROM alpine:3.11.3
+COPY --from=build go-be $GOPATH/bin/go-be
+#needed because alpine only has musl
+RUN apk add libc6-compat 
+
+CMD ["go-be"]
