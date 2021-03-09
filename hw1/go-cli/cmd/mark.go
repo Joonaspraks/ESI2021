@@ -16,7 +16,7 @@ limitations under the License.
 package cmd
 
 import (
-	// "fmt"
+	"fmt"
 	"net/http"
 	"errors"
 	"io/ioutil"
@@ -58,9 +58,11 @@ func init() {
 
 func markTodo(id string) {
 	// fmt.Printf("Todo with id: %v was marked as completed\n", id)
+	API_URL:= "http://golang-be:8080/todo/"
 
 	client := &http.Client{}
 	patch_url := API_URL + string(id)
+	fmt.Println(patch_url)
 
 	
 	req, err := http.NewRequest(http.MethodPatch, patch_url, nil)
