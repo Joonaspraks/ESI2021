@@ -1,0 +1,4 @@
+github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
+github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
+github.com/ulno/esi/testing-intro v0.0.0-20210301010930-ee914f309081 h1:iZzDtotiYpnH8EaZlwHN72FzizXp2pGPB911ZsOuVK8=
+github.com/ulno/esi/testing-intro v0.0.0-20210301010930-ee914f309081/go.mod h1:omwbQWxWqVHebupYXUg6nONjwoN0BqC+CpTz8neV5HY=
