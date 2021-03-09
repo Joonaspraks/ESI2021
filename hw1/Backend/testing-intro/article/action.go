@@ -1,3 +1,5 @@
+// DISCLAIMER Based upon "github.com/ulno/esi/testing-intro/article"  //
+
 package action
 
 import (
@@ -22,7 +24,7 @@ type Action struct {
 	ID          string `json:"ID"`
 	Message     string `json:"message"`
 	Name        string `json:"name"`
-	IsCompleted string `json:"link"`
+	IsCompleted bool   `json:"link"`
 }
 
 // GenSingleAction returns all actions matching the given id
@@ -30,6 +32,7 @@ func (r *Repository) GenSingleAction(ID string) []byte {
 	buf := &bytes.Buffer{}
 	for _, action := range r.actions {
 		if action.ID == ID {
+
 			json.NewEncoder(buf).Encode(action)
 		}
 	}
@@ -56,3 +59,28 @@ func (r *Repository) GenAllActions() []byte {
 	json.NewEncoder(buf).Encode(r.actions)
 	return buf.Bytes()
 }
+
+// GenSingleAction returns all actions matching the given id
+func (r *Repository) UpdateActionwithID(ID string) []byte {
+	buf := &bytes.Buffer{}
+	for _, action := range r.actions {
+		if action.ID == ID {
+			action.IsCompleted = true
+		}
+	}
+	return buf.Bytes()
+}
+
+// func checkStringAlphabet(str string) int {
+// 	a:=0
+// 	 for _, charVariable := range str {
+// 	  if  (charVariable >= 'A' && charVariable <= 'Z') {
+// 	   a++
+// 	  }
+// 	 }
+// 	 return a
+// 	}
+
+// 	func main() {
+// 	 fmt.Println(checkStringAlphabet("ActioZ"))
+// 	 fmt.Println(checkStringAlphabet("tegeVus"))

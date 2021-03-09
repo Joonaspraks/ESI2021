@@ -1,4 +1,5 @@
 // Example based on Rest and unit testing in https://golangdocs.com/
+// DISCLAIMER Based upon "github.com/ulno/esi/testing-intro/article"  //
 
 package main
 
@@ -18,19 +19,19 @@ var actions = []*action.Action{
 		ID:          "1",
 		Message:     "Watch TV",
 		Name:        "Mats",
-		IsCompleted: "0",
+		IsCompleted: false,
 	},
 	{
 		ID:          "2",
 		Message:     "Make dinner",
 		Name:        "Uku",
-		IsCompleted: "1",
+		IsCompleted: true,
 	},
 	{
 		ID:          "3",
 		Message:     "Enjoy your weekend",
 		Name:        "Ants",
-		IsCompleted: "0",
+		IsCompleted: false,
 	},
 }
 
@@ -79,12 +80,21 @@ func returnAllActions(w http.ResponseWriter, r *http.Request) {
 	w.Write(actionRepository.GenAllActions())
 }
 
+func updateSingleAction(w http.ResponseWriter, r *http.Request) {
+	log.Println(endPointHit, "update Single Action")
+	vars := mux.Vars(r)
+	id := vars["id"]
+	w.Write(actionRepository.UpdateActionwithID(id))
+}
+
 func main() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.HandleFunc("/", homePage).Methods(http.MethodGet)
-	myRouter.HandleFunc("/todos", returnAllActions).Methods(http.MethodGet)
-	myRouter.HandleFunc("/todos", createNewAction).Methods(http.MethodPost)
+	myRouter.HandleFunc("/todo", returnAllActions).Methods(http.MethodGet)
+	myRouter.HandleFunc("/todo", createNewAction).Methods(http.MethodPost)
 	myRouter.HandleFunc("/todo/{id}", deleteAction).Methods(http.MethodDelete)
-	myRouter.HandleFunc("/todo/{id}", returnSingleAction).Methods(http.MethodGet)
+	myRouter.HandleFunc("/todo/{id}", returnSingleAction).Methods(http.MethodGet) //pole vaja
+	myRouter.HandleFunc("/todo/{id}", updateSingleAction).Methods(http.MethodPatch)
+
 	log.Fatal(http.ListenAndServe(":8080", myRouter))
 }
