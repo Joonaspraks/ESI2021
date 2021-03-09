@@ -22,6 +22,7 @@ import (
 	"io/ioutil"
 	"log"
 	"bytes"
+	"fmt"
 
 
 	"github.com/spf13/cobra"
@@ -45,12 +46,15 @@ If your todo's name or description is more than one word use quotes.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args)==2{
 			// fmt.Printf("Argument one: %v, argument two: %v\n", args[0], args[1])
-			response := addNewTodo(args[0], args[1])
-			log.Println(string(response))
+			response:= addNewTodo(args[0], args[1])
+			log.Println(string(response),"\n")
+			fmt.Println("Task with name:",args[0],"and description:",args[1], "was created succesfully! List all tasks to see.")
 		} else {
 			// fmt.Printf("Argument one: %v, argument two: none\n", args[0])
-			response := addNewTodo(args[0],"")
-			log.Println(string(response))
+			response:=addNewTodo(args[0],"")
+			log.Println(string(response),"\n")
+
+			fmt.Println("Task with name: ",args[0], "was created succesfully! List all tasks to see.")
 
 		}
 	},
@@ -70,7 +74,7 @@ func init() {
 	// newCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func addNewTodo(name string, description string) []byte {
+func addNewTodo(name string, description string)[]byte {
 	// fmt.Printf("Todo with name %v was %v created succesfully!\n", name,description)
 
 
@@ -96,7 +100,7 @@ func addNewTodo(name string, description string) []byte {
 	if err!=nil {
 		log.Fatalln(err)
 	}
-
 	return body
+
 	
 }

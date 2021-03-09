@@ -16,12 +16,12 @@ limitations under the License.
 package cmd
 
 import (
-	// "fmt"
+	"fmt"
 	"io/ioutil"
 	"errors"
 	"net/http"
 	// "net/url"
-	// "encoding/json"
+	"encoding/json"
 	"log"
 	"github.com/spf13/cobra"
 )
@@ -40,8 +40,18 @@ var listCmd = &cobra.Command{
   },
 
 	Run: func(cmd *cobra.Command, args []string) {
-		body := listTodos()
-		log.Println(string(body))
+		response := listTodos()
+		var results []map[string]interface{}
+		json.Unmarshal([]byte(response), &results)
+		fmt.Println("Listing all todos... \n\n")
+
+		for _, result := range results {
+			fmt.Println("ID: ", result["ID"],
+								"Name: ",result["name"],
+								"\nDescription: ", result["message"],
+								"\nIs completed: ", result["isCompleted"],
+								"\n")
+		}
 	},
 }
 
