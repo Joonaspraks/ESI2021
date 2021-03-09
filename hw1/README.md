@@ -1,7 +1,7 @@
 Docker with compose
 
 run:
-docker-compose up -d
+docker-compose up -d [--build]
 docker-compose exec golang-cli bash
 
 In the new terminal run:
