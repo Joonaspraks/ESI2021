@@ -83,7 +83,7 @@ func addNewTodo(name string, description string) []byte {
 	if err!=nil {
 		log.Fatalln(err)
 	}
-
+	API_URL := "http://golang-be:8080/todos"
 	resp, err := http.Post(API_URL, "application/json", bytes.NewBuffer(requestBody))	
 
 	if err!=nil {
