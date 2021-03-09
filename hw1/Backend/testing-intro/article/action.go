@@ -5,6 +5,8 @@ package action
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"strconv"
 )
 
 // Repository to store actions
@@ -24,7 +26,7 @@ type Action struct {
 	ID          string `json:"ID"`
 	Message     string `json:"message"`
 	Name        string `json:"name"`
-	IsCompleted bool   `json:"link"`
+	IsCompleted bool   `json:"isCompleted"`
 }
 
 // GenSingleAction returns all actions matching the given id
@@ -41,7 +43,23 @@ func (r *Repository) GenSingleAction(ID string) []byte {
 
 // AddNewAction add an action to the internal actions list
 func (r *Repository) AddNewAction(action *Action) {
+	//
+	IDmax := "0"
+
+	for _, action := range r.actions {
+		if action.ID > IDmax {
+			IDmax = action.ID
+			action.IsCompleted = true
+		}
+	}
+
+	i, err := strconv.Atoi(IDmax)
+	if err != nil { //can I avoid error handling?
+		fmt.Println(err)
+	}
+	action.ID = strconv.Itoa(i + 1)
 	r.actions = append(r.actions, action)
+
 }
 
 // DeleteAction deletes all actions that have the given id from teh internal actions list
