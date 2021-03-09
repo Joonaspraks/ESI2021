@@ -5,6 +5,8 @@ package action
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"sort"
 )
 
 // Repository to store actions
@@ -55,8 +57,10 @@ func (r *Repository) DeleteActionWithID(ID string) {
 
 // genAllActions returns a json list of all actions in the internal action list
 func (r *Repository) GenAllActions() []byte {
+
 	buf := &bytes.Buffer{}
-	json.NewEncoder(buf).Encode(r.actions)
+	json.NewEncoder(buf).Encode(
+		sortTodosByCaps(r.actions))
 	return buf.Bytes()
 }
 
@@ -71,16 +75,30 @@ func (r *Repository) UpdateActionwithID(ID string) []byte {
 	return buf.Bytes()
 }
 
-// func checkStringAlphabet(str string) int {
-// 	a:=0
-// 	 for _, charVariable := range str {
-// 	  if  (charVariable >= 'A' && charVariable <= 'Z') {
-// 	   a++
-// 	  }
-// 	 }
-// 	 return a
-// 	}
+func checkStringAlphabet(str string) int {
+	a := 0
+	for _, charVariable := range str {
+		if charVariable >= 'A' && charVariable <= 'Z' {
+			a++
+		}
+	}
+	return a
+}
 
-// 	func main() {
-// 	 fmt.Println(checkStringAlphabet("ActioZ"))
-// 	 fmt.Println(checkStringAlphabet("tegeVus"))
+func sortTodosByCaps(actions []*Action) []*Action {
+	sort.Slice(actions, func(i, j int) bool {
+		return checkStringAlphabet(actions[i].Message) > checkStringAlphabet(actions[j].Message)
+	})
+
+	for _, action := range actions {
+		fmt.Printf("%+v", action)
+	}
+
+	return actions
+}
+
+func testChecker() {
+	fmt.Println(checkStringAlphabet("ActioZ"))
+	fmt.Println(checkStringAlphabet("tegeVus"))
+	fmt.Println(checkStringAlphabet("HELLLOOO!!"))
+}

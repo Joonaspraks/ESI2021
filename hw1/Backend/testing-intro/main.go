@@ -23,7 +23,7 @@ var actions = []*action.Action{
 	},
 	{
 		ID:          "2",
-		Message:     "Make dinner",
+		Message:     "Make DINNER",
 		Name:        "Uku",
 		IsCompleted: true,
 	},
