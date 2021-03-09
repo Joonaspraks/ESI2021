@@ -57,7 +57,7 @@ func init() {
 	// delCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func delTodo(id string){
+func delTodo(id string) []byte {
 	// fmt.Printf("Todo  with id: %v was deleted succesfully!\n", id)
 	API_URL:= "http://golang-be:8080/todos/"
 

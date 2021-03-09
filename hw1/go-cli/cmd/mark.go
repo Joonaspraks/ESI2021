@@ -57,7 +57,7 @@ func init() {
 	// markCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func markTodo(id string) {
+func markTodo(id string) []byte {
 	// fmt.Printf("Todo with id: %v was marked as completed\n", id)
 	API_URL:= "http://golang-be:8080/todos/"
 

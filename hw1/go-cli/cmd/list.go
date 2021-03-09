@@ -59,7 +59,7 @@ func init() {
 	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func listTodos(){
+func listTodos() []byte {
 	// fmt.Println("List of todos:\n\n Name: todo\n Description: something here\n Status: not completed\n")
 
 	resp, err := http.Get(API_URL)
