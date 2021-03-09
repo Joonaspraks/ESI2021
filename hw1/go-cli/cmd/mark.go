@@ -38,7 +38,8 @@ var markCmd = &cobra.Command{
 		return nil
   },
 	Run: func(cmd *cobra.Command, args []string) {
-		markTodo(args[0])
+		response := markTodo(args[0])
+		log.Println(string(response))
 	},
 }
 
@@ -58,7 +59,7 @@ func init() {
 
 func markTodo(id string) {
 	// fmt.Printf("Todo with id: %v was marked as completed\n", id)
-	API_URL:= "http://golang-be:8080/todo/"
+	API_URL:= "http://golang-be:8080/todos/"
 
 	client := &http.Client{}
 	patch_url := API_URL + string(id)
@@ -78,5 +79,5 @@ func markTodo(id string) {
     if err != nil {
         log.Fatal(err)
     }
-	log.Println(string(body))
+	return body
 }

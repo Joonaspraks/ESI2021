@@ -26,7 +26,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var API_URL = "http://golang-be:8080/todo/"
+var API_URL = "http://golang-be:8080/todos/"
 
 // listCmd represents the list command
 var listCmd = &cobra.Command{
@@ -40,7 +40,8 @@ var listCmd = &cobra.Command{
   },
 
 	Run: func(cmd *cobra.Command, args []string) {
-		listTodos()
+		body := listTodos()
+		log.Println(string(body))
 	},
 }
 
@@ -72,6 +73,6 @@ func listTodos(){
 		log.Fatalln(err)
 	}
 
-	log.Println(string(body))
+	return body
 
 }
