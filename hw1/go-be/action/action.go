@@ -15,6 +15,11 @@ type Repository struct {
 	actions []*Action
 }
 
+// GetActions returns all actions
+func (r *Repository) GetActions() []*Action {
+	return r.actions
+}
+
 // NewActionRepository returns action repository
 func NewActionRepository(actions []*Action) *Repository {
 	return &Repository{
