@@ -91,11 +91,11 @@ func main() {
 
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.HandleFunc("/", homePage).Methods(http.MethodGet)
-	myRouter.HandleFunc("/todo", returnAllActions).Methods(http.MethodGet)
-	myRouter.HandleFunc("/todo", createNewAction).Methods(http.MethodPost)
-	myRouter.HandleFunc("/todo/{id}", deleteAction).Methods(http.MethodDelete)
-	myRouter.HandleFunc("/todo/{id}", returnSingleAction).Methods(http.MethodGet) //pole vaja
-	myRouter.HandleFunc("/todo/{id}", updateSingleAction).Methods(http.MethodPatch)
+	myRouter.HandleFunc("/todos", returnAllActions).Methods(http.MethodGet)
+	myRouter.HandleFunc("/todos", createNewAction).Methods(http.MethodPost)
+	myRouter.HandleFunc("/todos/{id}", deleteAction).Methods(http.MethodDelete)
+	myRouter.HandleFunc("/todos/{id}", returnSingleAction).Methods(http.MethodGet) //pole vaja
+	myRouter.HandleFunc("/todos/{id}", updateSingleAction).Methods(http.MethodPatch)
 
 	log.Fatal(http.ListenAndServe(":8080", myRouter))
 }

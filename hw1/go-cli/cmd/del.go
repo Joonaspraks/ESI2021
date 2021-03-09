@@ -58,6 +58,8 @@ func init() {
 
 func delTodo(id string){
 	// fmt.Printf("Todo  with id: %v was deleted succesfully!\n", id)
+	API_URL:= "http://golang-be:8080/todo/"
+
 	client := &http.Client{}
 	patch_url := API_URL + string(id)
 
