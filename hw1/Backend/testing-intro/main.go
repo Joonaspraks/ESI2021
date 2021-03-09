@@ -88,6 +88,7 @@ func updateSingleAction(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.HandleFunc("/", homePage).Methods(http.MethodGet)
 	myRouter.HandleFunc("/todos", returnAllActions).Methods(http.MethodGet)
