@@ -26,7 +26,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var API_URL = "https://reqres.in/api/users/"
+var API_URL = "http://golang-be:8080/todos"
 
 // listCmd represents the list command
 var listCmd = &cobra.Command{

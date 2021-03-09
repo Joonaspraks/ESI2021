@@ -1,0 +1,9 @@
+services:
+  golang-be:
+    #build: "./Backend/testing-intro/"
+    image: joonaspraks/golang-be
+  golang-cli:
+    #build: "./go-cli"
+    image: joonaspraks/golang-cli
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
