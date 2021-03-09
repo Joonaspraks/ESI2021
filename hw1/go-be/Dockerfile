@@ -2,7 +2,7 @@ FROM golang:1.16 as build
 
 WORKDIR /go/src/app
 COPY . .
-
+RUN go test ./test
 RUN go build -o /go-be
 
 FROM alpine:3.11.3
